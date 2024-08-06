@@ -16,7 +16,6 @@ COPY . .
 # Install dependencies and build my Angular project
 RUN npm install && ng build --prod
 
-
 # STAGE 2: Build the final deployable image
 FROM nginx:1.21
 

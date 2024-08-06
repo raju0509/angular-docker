@@ -1,5 +1,11 @@
 version: 0.2
 
+env:
+  parameter-store:
+    DOCKERHUB_USER: "/docker/username"
+  secrets-manager:
+    DOCKERHUB_TOKEN: docker_credentials:token  
+
 phases:
   pre_build:
     commands:
@@ -10,5 +16,5 @@ phases:
 
   post_build:
     commands:
-      - docker tag my-angular-app:latest ${DOCKERHUB_USER}/angular-docker-repo-b10:latest
-      - docker push ${DOCKERHUB_USER}/angular-docker-repo-b10:latest 
+      - docker tag my-angular-app:latest ${DOCKERHUB_USER}/angular-docker-repo-b10:env
+      - docker push ${DOCKERHUB_USER}/angular-docker-repo-b10:env
