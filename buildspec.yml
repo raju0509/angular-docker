@@ -1,30 +1,26 @@
 version: 0.2
 
-# env:
-#   parameter-store:
-#     DOCKERHUB_USER: "/docker/username"
-#   secrets-manager:
-#     DOCKERHUB_TOKEN: docker_credentials:token  
-
 phases:
   pre_build:
     commands:
-      # - echo ${DOCKERHUB_TOKEN} | docker login -u ${DOCKERHUB_USER} --password-stdin 
-      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 556074018555.dkr.ecr.ap-south-1.amazonaws.com
-      
+      - echo Logging in to Amazon ECR...
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 448775933799.dkr.ecr.us-east-1.amazonaws.com
+
   build:
     commands:
-      # - docker build -t my-angular-app:latest .
+      - echo Build started on `date`
+      - echo Building the Docker image...
       - docker build -t b10-angular-docker .
 
   post_build:
     commands:
-      # - docker tag my-angular-app:latest ${DOCKERHUB_USER}/angular-docker-repo-b10:env
-      # - docker push ${DOCKERHUB_USER}/angular-docker-repo-b10:env
-      - docker tag b10-angular-docker:latest 556074018555.dkr.ecr.us-east-1.amazonaws.com/b10-angular-docker:${CODEBUILD_BUILD_NUMBER}
-      - docker push 556074018555.dkr.ecr.ap-south-1.amazonaws.com/b10-angular-docker:${CODEBUILD_BUILD_NUMBER}
-      - printf '[{"name":"angularimage","imageUri":"%s"}]' 556074018555.dkr.ecr.ap-south-1.amazonaws.com/b10-angular-docker:${CODEBUILD_BUILD_NUMBER} > taskDefinition.json
-
+      - echo Build completed on `date`
+      - echo Tagging the image...
+      - docker tag b10-angular-docker:latest 448775933799.dkr.ecr.us-east-1.amazonaws.com/b10-angular-docker:${CODEBUILD_BUILD_NUMBER}
+      - echo Pushing the Docker image...
+      - docker push 448775933799.dkr.ecr.us-east-1.amazonaws.com/b10-angular-docker:${CODEBUILD_BUILD_NUMBER}
+      - echo Creating taskDefinition.json...
+      - printf '[{"name":"angularimage","imageUri":"%s"}]' 448775933799.dkr.ecr.us-east-1.amazonaws.com/b10-angular-docker:${CODEBUILD_BUILD_NUMBER} > taskDefinition.json
 
 artifacts:
   files:
