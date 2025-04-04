@@ -21,7 +21,7 @@ phases:
     commands:
       # - docker tag my-angular-app:latest ${DOCKERHUB_USER}/angular-docker-repo-b10:env
       # - docker push ${DOCKERHUB_USER}/angular-docker-repo-b10:env
-      - docker tag b10-angular-docker:latest 556074018555.dkr.ecr.ap-south-1.amazonaws.com/b10-angular-docker:${CODEBUILD_BUILD_NUMBER}
+      - docker tag b10-angular-docker:latest 556074018555.dkr.ecr.us-east-1.amazonaws.com/b10-angular-docker:${CODEBUILD_BUILD_NUMBER}
       - docker push 556074018555.dkr.ecr.ap-south-1.amazonaws.com/b10-angular-docker:${CODEBUILD_BUILD_NUMBER}
       - printf '[{"name":"angularimage","imageUri":"%s"}]' 556074018555.dkr.ecr.ap-south-1.amazonaws.com/b10-angular-docker:${CODEBUILD_BUILD_NUMBER} > taskDefinition.json
 
